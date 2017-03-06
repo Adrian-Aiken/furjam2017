@@ -5,7 +5,7 @@
 var Engine = function () {
     this.gameState = function () { };
 
-    this.assetLoadQueue=[];
+    this.assetLoadQueue = [];
     this.sprites = {};
 
     this.lastUpdateTime = Date.now();
@@ -22,6 +22,45 @@ var Engine = function () {
     document.body.appendChild(this.renderer.view);
 
     this.stage = new PIXI.Container();
+
+    /************************************ SET AUDIO OBJECT ON PIXI *************************************/
+    
+
+    var _utils = new utils(PIXI);
+    var _AudioManager = new AudioManager(utils);
+    var _Audio = new PIXIAudio({}, AudioManager);
+
+    let audio = {
+      utils : _utils,
+      AudioManager : _AudioManager,
+      Audio : _Audio,
+      audioParser : audioParser
+    };
+
+    if(!PIXI.AudioManager){
+      let Loader = PIXI.loaders.Loader;
+      Loader.addPixiMiddleware(audioParser);
+
+      let baseAdd = Loader.prototype.add;
+      Loader.prototype.add = function(name, url, options, cb){
+        if(typeof name === 'object'){
+          if(Object.prototype.toString.call(name.url) === "[object Array]"){
+            name.url = audioUrlParser(name.url);
+          }
+        }
+
+        if(Object.prototype.toString.call(url) === "[object Array]"){
+          url = audioUrlParser(url);
+        }
+
+        baseAdd.call(this, name, url, options, cb);
+      };
+
+      PIXI.audio = audio;
+      PIXI.loader = new PIXI.loaders.Loader();
+      PIXI.loaders.audioParser = audioParser;
+      PIXI.audioManager = new AudioManager(audio.utils);
+    }
 };
 
 Engine.prototype = {
@@ -63,7 +102,7 @@ Engine.prototype = {
         var loadedData = this.assetLoadQueue.pop();
 
         var frames = [];
-        for (var i = 0; i < loadedData.numFrames; ++i) {
+        for (var i = 0; i < loadedData.frames; ++i) {
             var val = i < 10 ? '0' + i : i;
 
             frames.push(PIXI.Texture.fromFrame(loadedData.frameName + val + ".png"));
@@ -71,26 +110,52 @@ Engine.prototype = {
 
         var anim = new PIXI.extras.AnimatedSprite(frames);
 
+        anim.addedToStage = false;
         this.sprites[loadedData.friendlyName] = anim;
     },
 
-    assetLoadedCallback: function (loader, resource) {
+    loadNewAudioFile: function (_friendlyName, _filePath, _tag, _autoPlay) {
+        this.assetLoadQueue.push({ friendlyName: _friendlyName, filePath: _filePath, tag: _tag, autoPlay: _autoPlay });
+        PIXI.loader
+            .add([{ name: _friendlyName, url: _filePath}])
+            .load(this.onAudioLoaded.bind(this));
 
     },
 
-    addSpriteToStage: function () {
-        var sprite = new PIXI.Sprite(PIXI.loader.resources["../assets/icon.jpg"].texture);
-        stage.addChild(sprite);
+    onAudioLoaded: function () {
+        var loadedData = this.assetLoadQueue.pop();
+        console.log("PIXI Loaded " + loadedData.friendlyName);
+
+        var loadedAudio = PIXI.audioManager.getAudio(loadedData.friendlyName);
+        loadedAudio[loadedData.tag] = true;
+        console.log("Audio object is " + loadedAudio);
+        if (loadedData.autoPlay) {
+            loadedAudio.play();
+        }
     },
 
     testAnimationSpriteSheet: function () {
-        this.loadNewSpriteSheet("testAnim", "testSequence", "../assets/icon.json", 30);
+        this.loadNewSpriteSheet("testAnim", "testSequence00", "../assets/Spritesheets/icon.json", 30);
         this.gameState = this.testGameState;
     },
 
+    testAudio: function () {
+        this.loadNewAudioFile("testMusic", "../assets/Audio/Music/01 - The Hedonist (Original Mix).mp3", "music", true);
+    },
+
     testGameState: function () {
-        if (this.sprites["testAnim"] != null && this.sprites["testAnim"].added == false) {
-            this.stage.addChild(this.sprites["testAnim"]);
+        var anim = this.sprites["testAnim"];
+
+        if (anim != null) {
+            if (!anim.addedToStage) {
+                this.stage.addChild(anim);
+                anim.addedToStage = true;
+                anim.play();
+            }
+            else {
+                anim.x = (anim.x + 1) % (window.innerWidth - anim.width);
+                anim.y = (anim.y + 1) % (window.innerHeight - anim.height);
+            }
         }
     }
 }
