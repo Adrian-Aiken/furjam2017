@@ -7,17 +7,10 @@
         <script src="../lib/underscore.js"></script>
         <script src="../lib/backbone.js"></script>
         <script src="../lib/pixi.min.js"></script>
-        <script src="../app/main.js"></script>
+        <link rel="stylesheet" href="../styles/common.css">
         <title></title>
     </head>
     <body>
-        <script type="text/javascript">
-            var type = "WebGL"
-            if (!PIXI.utils.isWebGLSupported()) {
-                type = "canvas";
-            }
-
-            PIXI.utils.sayHello(type);
-        </script>
+        <script src="../app/main.js"></script>
     </body>
 </html>
