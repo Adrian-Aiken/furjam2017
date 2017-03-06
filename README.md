@@ -18,6 +18,10 @@ Make sure that your minigame has the following fields and implements the below f
 
 ### Fields
 * Name
+* Prompt
+** Prompt given to the player of what to do. Should be quick to understand
+* Assets
+** List of external assets used
 
 ### Functions
 * Initialize
