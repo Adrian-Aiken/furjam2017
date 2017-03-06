@@ -12,8 +12,6 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'engine', 'minigame'].concat(GA
     _.each(GAME_LIST, (gameName) => {
         var game = eval(gameName);
         
-        minigames.push(new Minigame(game))
-    })
-
-    console.log(minigames);
+        minigames.push(new Minigame(game));
+    });
 });

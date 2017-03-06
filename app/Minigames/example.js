@@ -4,5 +4,17 @@
 
 var ExampleGame = {
     "Name": "Example Game",
-    "Author": "Goatie"
+    "Author": "Goatie",
+
+    "Initialize": function() {
+        console.log("Initalized Example game");
+    },
+
+    "Update": function() {
+        
+    },
+
+    "Finish": function() {
+        return true;
+    }
 };
