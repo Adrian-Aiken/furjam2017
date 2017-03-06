@@ -1,14 +1,11 @@
 require.config({
-    baseUrl: "app",
-    shim: {
-        'name': {
-            deps: ['dep'],
-            exports: 'exports'
-        }
-    },
+    baseUrl: "../app",
     paths: {
-        "name": "path"
+        backbone: "lib/backbone",
+        jquery: "lib/jquery-3.1.1",
+        pixi: "lib/pixi.min",
+        underscore: "lib/underscore"
     }
 });
 
-requirejs(['app/main']);
+requirejs(['main']);
