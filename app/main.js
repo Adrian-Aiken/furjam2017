@@ -1,14 +1,12 @@
 "use strict";
 
+var gEngine;
+
 define(function (require) {
     // Required external Modules
-    var PIXI = require('pixi');
+    require('pixi');
+    require('engine');
 
-    var stage, renderer, sprites, gameState;
-
-var gEngine = new Engine();
-gEngine.start();
-
-
-
-
+    gEngine = new Engine();
+    gEngine.start();
+});
