@@ -5,7 +5,7 @@ var GAME_LIST = ["ExampleGame"];
 var gEngine;
 var minigames = [];
 
-define(['jquery', 'underscore', 'pixi', 'engine', 'minigame'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'engine', 'minigame'].concat(GAME_LIST), function ($, _) {
     gEngine = new Engine();
     gEngine.start();
 
