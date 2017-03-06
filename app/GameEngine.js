@@ -23,9 +23,9 @@ var Engine = function () {
 
     this.stage = new PIXI.Container();
 
-    /************************************ SET AUDIO OBJECT ON PIXI *************************************/
+    /************************************ SET AUDIO OBJECT ON PIXI (doesn't work yet) *************************************/
     
-
+    /*
     var _utils = new utils(PIXI);
     var _AudioManager = new AudioManager(utils);
     var _Audio = new PIXIAudio({}, AudioManager);
@@ -57,10 +57,11 @@ var Engine = function () {
       };
 
       PIXI.audio = audio;
-      PIXI.loader = new PIXI.loaders.Loader();
+      //PIXI.loader = new PIXI.loaders.Loader();
       PIXI.loaders.audioParser = audioParser;
       PIXI.audioManager = new AudioManager(audio.utils);
     }
+    */
 };
 
 Engine.prototype = {
