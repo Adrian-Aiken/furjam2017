@@ -4,7 +4,7 @@ require.config({
         //Libraries
         jquery: "lib/jquery-3.1.1",
         pixi: "lib/pixi.min",
-        audio:"lib/pixi-audio",
+        audio:"lib/howler.min",
         underscore: "lib/underscore",
 
         // Locally required classes

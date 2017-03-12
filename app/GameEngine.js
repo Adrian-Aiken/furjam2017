@@ -7,6 +7,7 @@ var Engine = function () {
 
     this.assetLoadQueue = [];
     this.sprites = {};
+    this.audioClips = {};
 
     this.lastUpdateTime = Date.now();
 
@@ -22,46 +23,6 @@ var Engine = function () {
     document.body.appendChild(this.renderer.view);
 
     this.stage = new PIXI.Container();
-
-    /************************************ SET AUDIO OBJECT ON PIXI (doesn't work yet) *************************************/
-    
-    /*
-    var _utils = new utils(PIXI);
-    var _AudioManager = new AudioManager(utils);
-    var _Audio = new PIXIAudio({}, AudioManager);
-
-    let audio = {
-      utils : _utils,
-      AudioManager : _AudioManager,
-      Audio : _Audio,
-      audioParser : audioParser
-    };
-
-    if(!PIXI.AudioManager){
-      let Loader = PIXI.loaders.Loader;
-      Loader.addPixiMiddleware(audioParser);
-
-      let baseAdd = Loader.prototype.add;
-      Loader.prototype.add = function(name, url, options, cb){
-        if(typeof name === 'object'){
-          if(Object.prototype.toString.call(name.url) === "[object Array]"){
-            name.url = audioUrlParser(name.url);
-          }
-        }
-
-        if(Object.prototype.toString.call(url) === "[object Array]"){
-          url = audioUrlParser(url);
-        }
-
-        baseAdd.call(this, name, url, options, cb);
-      };
-
-      PIXI.audio = audio;
-      //PIXI.loader = new PIXI.loaders.Loader();
-      PIXI.loaders.audioParser = audioParser;
-      PIXI.audioManager = new AudioManager(audio.utils);
-    }
-    */
 };
 
 Engine.prototype = {
@@ -116,23 +77,15 @@ Engine.prototype = {
     },
 
     loadNewAudioFile: function (_friendlyName, _filePath, _tag, _autoPlay) {
-        this.assetLoadQueue.push({ friendlyName: _friendlyName, filePath: _filePath, tag: _tag, autoPlay: _autoPlay });
-        PIXI.loader
-            .add([{ name: _friendlyName, url: _filePath}])
-            .load(this.onAudioLoaded.bind(this));
-
+        this.audioClips[_friendlyName] = new Howl({
+            src: _filePath,
+            autoplay: _autoPlay,
+            onload: this.onAudioLoaded.bind(this)
+        });
     },
 
     onAudioLoaded: function () {
-        var loadedData = this.assetLoadQueue.pop();
-        console.log("PIXI Loaded " + loadedData.friendlyName);
-
-        var loadedAudio = PIXI.audioManager.getAudio(loadedData.friendlyName);
-        loadedAudio[loadedData.tag] = true;
-        console.log("Audio object is " + loadedAudio);
-        if (loadedData.autoPlay) {
-            loadedAudio.play();
-        }
+        console.log("Loaded Audio" + this);
     },
 
     testAnimationSpriteSheet: function () {
@@ -146,6 +99,9 @@ Engine.prototype = {
 
     testGameState: function () {
         var anim = this.sprites["testAnim"];
+        var audio = this.audioClips["testMusic"];
+
+
 
         if (anim != null) {
             if (!anim.addedToStage) {
@@ -157,6 +113,23 @@ Engine.prototype = {
                 anim.x = (anim.x + 1) % (window.innerWidth - anim.width);
                 anim.y = (anim.y + 1) % (window.innerHeight - anim.height);
             }
+        }
+
+        if (audio != null) {
+            if (audio.audioAngleHoriz == undefined) {
+                audio.audioAngleHoriz = 0;
+            }
+            if (audio.audioPos == undefined) {
+                audio.audioPos = { x: 0, y: 0, z: 0 };
+            }
+
+            audio.audioAngleHoriz += 0.09;
+            audio.audioPos.x = Math.cos(audio.audioAngleHoriz);
+            audio.audioPos.y = Math.sin(audio.audioAngleHoriz);
+
+            audio.pos(audio.audioPos.x, audio.audioPos.y, audio.audioPos.z);
+
+            console.log(audio.audioAngleHoriz + ", " + audio.audioPos.x + ", " + audio.audioPos.y);
         }
     }
 }
