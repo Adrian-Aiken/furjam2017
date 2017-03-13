@@ -10,6 +10,7 @@ require.config({
         // Locally required classes
         engine: "GameEngine",
         minigame: "Minigame",
+        gamepad: "Gamepad",
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example"
