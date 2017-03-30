@@ -33,6 +33,34 @@ var GamepadMapping = function(_buttons, _axes) {
     }
 }
 
+/** 
+ * Constructor for Gamepad object
+ *  GamepadNumber and GamepadManager only needed if isKeyboard is false
+ */
+var PlayerGamepad = function(_isKeyboard, _defaultConfig, _gamepadNumber, _gamepadManager) {
+    this.isKeyboard = _isKeyboard;
+    this.config = _defaultConfig;
+    this.gamepadNum = _gamepadNumber;
+    this.gamepadManager = _gamepadManager;
+}
+
+PlayerGamepad.prototype = {
+    left:   function () { return this.getButton(0); },
+    up:     function () { return this.getButton(1); },
+    right:  function () { return this.getButton(2); },
+    down:   function () { return this.getButton(3); },
+    a_btn:  function () { return this.getButton(4); },
+    b_btn:  function () { return this.getButton(5); },
+
+    getButton: function (buttonNum) {
+        if (this.isKeyboard) {
+            return keyMap[this.config[buttonNum]]; 
+        } else {
+            return this.gamepadManager.getButtonPressed(this.gamepadNum, this.config[buttonNum])
+        }
+    }
+} 
+
 GamepadMapping.prototype = {
 
     DefaultGamepadButtons:{
