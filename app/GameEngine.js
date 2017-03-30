@@ -23,6 +23,8 @@ var Engine = function () {
     document.body.appendChild(this.renderer.view);
 
     this.stage = new PIXI.Container();
+
+    this.gamepadManager = new GamepadManager();
 };
 
 Engine.prototype = {
@@ -36,6 +38,9 @@ Engine.prototype = {
         //console.log("Update Frame.  dT = " + deltaTime);
 
         requestAnimationFrame(this.update.bind(this));
+
+        //Update gamepad button states
+        this.gamepadManager.pollConnectedGamepads();
 
         if (this.gameState != null) {
             this.gameState();
@@ -101,8 +106,6 @@ Engine.prototype = {
         var anim = this.sprites["testAnim"];
         var audio = this.audioClips["testMusic"];
 
-
-
         if (anim != null) {
             if (!anim.addedToStage) {
                 this.stage.addChild(anim);
@@ -131,5 +134,8 @@ Engine.prototype = {
 
             console.log(audio.audioAngleHoriz + ", " + audio.audioPos.x + ", " + audio.audioPos.y);
         }
+
+        console.log(this.gamepadManager.getButtonPressed(0, gamepadManager.defaultGamepadMapping.A));
+        console.log(this.gamepadManager.getAxisValue(0, gamepadManager.defaultGamepadmapping.LeftStickHorizontal));
     }
 }

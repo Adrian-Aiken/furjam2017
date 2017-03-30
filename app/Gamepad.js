@@ -15,15 +15,133 @@ onkeyup = function(e) {
     keyMap[e.keyCode] = false;
 }
 
-var Gamepad = function(keys) {
-    this._keys = keys;
+var GamepadMapping = function(_buttons, _axes) {
+    if(!_buttons)
+    {
+        this.buttons = this.DefaultGamepadButtons;
+    }
+    else{
+        this.buttons = _keys;
+    }
+    
+    if(!_axes){
+        this.axes = this.DefaultGamepadAxes;
+    }
+    else{
+        this.axes = _axes;
+    }
 }
 
-Gamepad.prototype = {
-    left:   function () { return keyMap[this._keys[0]]; },
-    up:     function () { return keyMap[this._keys[1]]; },
-    right:  function () { return keyMap[this._keys[2]]; },
-    down:   function () { return keyMap[this._keys[3]]; },
-    a_btn:  function () { return keyMap[this._keys[4]]; },
-    b_btn:  function () { return keyMap[this._keys[5]]; }
+GamepadMapping.prototype = {
+
+    DefaultGamepadButtons:{
+        A: 0,
+        B: 1,
+        X: 2,
+        Y: 3,
+        L1: 4,
+        R1: 5,
+        L2: 6,
+        R2: 7,
+        Select: 8,
+        Start: 9,
+        L3: 10,
+        R3: 11,
+        DpadUp: 12,
+        DpadDown: 13,
+        DpadLeft: 14,
+        DpadRight: 15,
+        Center: 16
+    },
+
+    DefaultGamepadAxisMapping:{
+        LeftStickHorizontal: 0,
+        LeftStickVertical: 1,
+        RightStickHorizontal: 2,
+        RightStickVertical: 3
+    },
+
+    remapButton: function(buttonId, newButtonIndex){
+        if(this.buttons[buttonId]){
+            this.buttons[buttonId] = newButtonIndex;
+        }
+    },
+
+    remapAxis: function(axisId, newAxisIndex){
+        if(this.axes[axisId]){
+            this.axes[axisId] = newAxisIndex;
+        }
+    }
+}
+
+var GamepadManager = function(){
+    window.addEventListener("gamepadconnected", this.gamepadConnected.bind(this), false);
+    window.addEventListener("gamepaddisconnected", this.gamepadDisconnected.bind(this), false);
+
+    this.defaultGamepadMapping = new GamepadMapping();
+
+    this.pollConnectedGamepads();
+}
+
+GamepadManager.prototype = {
+
+    gamepads: {},
+
+    pollConnectedGamepads: function () {
+        this.gamepads = navigator.getGamepads();
+    },
+
+    gamepadConnected: function (event) {
+        var gamepad = event.gamepad;
+
+        this.gamepads[gamepad.index] = gamepad;
+        console.log("Gamepad added!" + gamepad.id + ": " + gamepad.index);
+    },
+
+    gamepadDisconnected: function (event) {
+        console.log("Gamepad removed!" + gamepad.id + ": " + gamepad.index);
+        delete this.gamepads[gamepad.index];
+    },
+
+    getButtonPressed: function (gamepadIndex, buttonName) {
+        var retVal = false;
+
+        if (this.gamepads[gamepadIndex]) {
+            var buttonIndex = this.DefaultGamepadButtonMapping.indexOf(buttonName);
+            if (buttonIndex > -1) {
+                var button = this.gamepads[gamepadIndex].buttons[buttonIndex];
+                retVal = button.pressed || button.value > 0;
+            }
+        }
+
+        return retVal;
+    },
+
+    getButtonValue: function (gamepadIndex, buttonIndex) {
+        var retVal = 0;
+
+        if (this.gamepads[gamepadIndex]) {
+            if (buttonIndex > -1) {
+                var button = this.gamepads[gamepadIndex].buttons[buttonIndex];
+                retVal = button.value;
+            }
+        }
+
+        return retVal;
+    },
+
+    getAxisValue: function (gamepadIndex, axisIndex) {
+        var retVal = 0.0;
+
+        if (this.gamepads[gamepadIndex]) {
+            if (axisIndex > -1) {
+                var axis = this.gamepads[gamepadIndex].axes[axisIndex];
+                retVal = axis;
+            }
+        }
+
+        return retVal;
+    },
+
+    
 }

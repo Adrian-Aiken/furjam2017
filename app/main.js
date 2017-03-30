@@ -3,10 +3,9 @@
 var GAME_LIST = ["ExampleGame"];
 
 var gEngine;
-var pad;
 var minigames = [];
 
-define(['jquery', 'underscore', 'pixi', 'audio', 'engine', 'minigame', 'gamepad'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'engine', 'minigame'].concat(GAME_LIST), function ($, _) {
     _.each(GAME_LIST, (gameName) => {
         var game = eval(gameName);
         
@@ -15,6 +14,4 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'engine', 'minigame', 'gamepad'
 
     gEngine = new Engine();
     gEngine.start();
-
-    pad = new Gamepad(Player1_keys);
 });
