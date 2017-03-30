@@ -55,7 +55,7 @@ GamepadMapping.prototype = {
         Center: 16
     },
 
-    DefaultGamepadAxisMapping:{
+    DefaultGamepadAxes:{
         LeftStickHorizontal: 0,
         LeftStickVertical: 1,
         RightStickHorizontal: 2,
@@ -104,11 +104,10 @@ GamepadManager.prototype = {
         delete this.gamepads[gamepad.index];
     },
 
-    getButtonPressed: function (gamepadIndex, buttonName) {
+    getButtonPressed: function (gamepadIndex, buttonIndex) {
         var retVal = false;
 
         if (this.gamepads[gamepadIndex]) {
-            var buttonIndex = this.DefaultGamepadButtonMapping.indexOf(buttonName);
             if (buttonIndex > -1) {
                 var button = this.gamepads[gamepadIndex].buttons[buttonIndex];
                 retVal = button.pressed || button.value > 0;

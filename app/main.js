@@ -20,7 +20,7 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'engine', 'minigame'
 
     var loopCount = 0;
     var minigameLoop = setInterval(function() {
-        minigames[0].update(pad, loopCount);
+        //minigames[0].update(pad, loopCount);
         loopCount++;
 
         if (loopCount >= 30*5) {

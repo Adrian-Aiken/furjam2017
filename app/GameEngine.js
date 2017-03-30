@@ -135,7 +135,7 @@ Engine.prototype = {
             console.log(audio.audioAngleHoriz + ", " + audio.audioPos.x + ", " + audio.audioPos.y);
         }
 
-        console.log(this.gamepadManager.getButtonPressed(0, gamepadManager.defaultGamepadMapping.A));
-        console.log(this.gamepadManager.getAxisValue(0, gamepadManager.defaultGamepadmapping.LeftStickHorizontal));
+        console.log(gEngine.gamepadManager.getButtonPressed(0, gEngine.gamepadManager.defaultGamepadMapping.buttons.A));
+        console.log(gEngine.gamepadManager.getAxisValue(0, gEngine.gamepadManager.defaultGamepadMapping.axes.LeftStickHorizontal));
     }
 }
