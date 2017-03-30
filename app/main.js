@@ -10,8 +10,24 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'engine', 'minigame'
         var game = eval(gameName);
         
         minigames.push(new Minigame(game));
+
+        console.log("Pushed: " + minigames[0].name);
     });
 
     gEngine = new Engine();
     gEngine.start();
+    minigames[0].init();
+
+    var loopCount = 0;
+    var minigameLoop = setInterval(function() {
+        minigames[0].update(pad, loopCount);
+        loopCount++;
+
+        if (loopCount >= 30*5) {
+            clearInterval(minigameLoop);
+            minigames[0].finish();
+        }
+    }, 1000/60);
+    
+
 });

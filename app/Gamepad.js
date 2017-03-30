@@ -3,6 +3,7 @@
  */
 
 //NOTE - FOR MOMENT, HARDCODED TO USE KEYBOARD
+//TODO - Add reconfigurability, gamepad support, setkey?
 //Left, up, right, down, a, b
 var Player1_keys = [65, 87, 68, 83, 32, 16];
 var Player2_keys = [37, 38, 39, 40, 17, 96];
