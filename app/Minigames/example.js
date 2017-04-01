@@ -24,11 +24,11 @@ var ExampleGame = {
         this.players = players;
         this.pad = players[0].myGamepad;
         this.stage = stage;
+
+        this.checkmark = assMan.GetSprite("checkmark");
     },
 
     Update: function() {
-        if (!this.checkmark) this.checkmark = assMan.GetSprite("checkmark");
-
         if (this.pad.a_btn()) {
             this.buttonPressed = true;
             this.stage.addChild(this.checkmark);

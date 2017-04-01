@@ -77,6 +77,9 @@ MinigameManager.prototype = {
         for (var i = 0; i < this.totalRounds; i++) {
             var randGame = Math.floor(Math.random() * this.allMinigames.length);
             var gameInstance = eval(this.allMinigames[randGame]);
+            _.each(gameInstance.Assets.Sprites, (spriteDef) => {
+                assMan.AddTexture(spriteDef);
+            });
             this.minigameList.push(new Minigame(gameInstance));
         }
     },

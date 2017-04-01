@@ -10,14 +10,10 @@ var AssetManager = function() {
 
 AssetManager.prototype = {
     AddTexture: function (asset) {
+        if (this.Textures[asset.Name]) return;
+
         this.Textures[asset.Name] = baseImageFolder + asset.FileName;
         PIXI.loader.add(asset.Name, baseImageFolder + asset.FileName);
-    },
-
-    LoadAssets: function () {
-        PIXI.loader.load((loader, resources) => {
-            this.assets = resources;
-        });
     },
 
     GetSprite: function (assetName) {
