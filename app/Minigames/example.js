@@ -10,17 +10,11 @@ var ExampleGame = {
 
     /** List of assets and initialization of them */
     Assets: {
-        //Sprites: ["../assets/Spritesheets/checkmark.png", "../assets/Spritesheets/incorrect.png"],
-        Sprites: [],
+        Sprites: [ 
+            { Name: "checkmark", FileName: "checkmark.png"},
+            { Name: "incorrect", FileName: "incorrect.png"}
+        ],
         Sounds: []
-    },
-
-    /** Called when the game loads, to allow for pre-loading of assets
-     *  These assets should not change during the life of your game.
-     */
-    OnLoad: function() {
-        //this.checkmark = new PIXI.Sprite(PIXI.loader.resources["../assets/Spritesheets/checkmark.png"].texture);
-        //this.incorrect = new PIXI.Sprite(PIXI.loader.resources["../assets/Spritesheets/incorrect.png"].texture);
     },
     
     Initialize: function(playerGamepad, stage) {
@@ -31,6 +25,8 @@ var ExampleGame = {
     },
 
     Update: function() {
+        if (!this.checkmark) this.checkmark = assMan.GetSprite("checkmark");
+
         if (this.pad.a_btn()) {
             this.buttonPressed = true;
             this.checkmark = PIXI.Sprite.fromImage("../assets/Spritesheets/checkmark.png");

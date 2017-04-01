@@ -12,6 +12,7 @@ require.config({
         minigame: "Minigame",
         gamepad: "Gamepad",
         player: "Player",
+        assetmanager: "AssetManager",
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example"

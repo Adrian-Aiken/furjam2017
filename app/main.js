@@ -2,17 +2,24 @@
 
 var GAME_LIST = ["ExampleGame"];
 
-var gEngine;
+var gEngine, assMan;
 var minigames = [];
 
-define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'assetmanager'].concat(GAME_LIST), function ($, _) {
+    assMan = new AssetManager();
+    
     _.each(GAME_LIST, (gameName) => {
         var game = eval(gameName);
         
         minigames.push(new Minigame(game));
+        _.each(game.Assets.Sprites, (spriteDef) => {
+            assMan.AddTexture(spriteDef);
+        });
 
-        console.log("Pushed: " + minigames[0].name);
+        console.log("Pushed: " + game.name);
     });
+
+    assMan.LoadAssets();
 
     gEngine = new Engine();
     gEngine.start();
