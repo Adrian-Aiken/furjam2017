@@ -16,11 +16,12 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
 
     gEngine = new Engine();
     gEngine.start();
-    minigames[0].init();
+    var testGamepad = new PlayerGamepad(true, Player1_keys, 0, gEngine.gamepadManager);
+    minigames[0].init(testGamepad, gEngine.stage);
 
     var loopCount = 0;
     var minigameLoop = setInterval(function() {
-        //minigames[0].update(pad, loopCount);
+        minigames[0].update();
         loopCount++;
 
         if (loopCount >= 30*5) {
