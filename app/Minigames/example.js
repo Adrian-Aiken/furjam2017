@@ -7,6 +7,7 @@ var ExampleGame = {
     Name: "Example Game",
     Author: "Goatie",
     Prompt: "Press a button!",
+    NumPlayers: 1,
 
     /** List of assets and initialization of them */
     Assets: {
@@ -16,11 +17,12 @@ var ExampleGame = {
         ],
         Sounds: []
     },
-    
-    Initialize: function(playerGamepad, stage) {
+
+    Initialize: function (players, stage) {
         console.log("Initalized Example game");
         this.buttonPressed = false;
-        this.pad = playerGamepad;
+        this.players = players;
+        this.pad = players[0].myGamepad;
         this.stage = stage;
     },
 
@@ -29,13 +31,13 @@ var ExampleGame = {
 
         if (this.pad.a_btn()) {
             this.buttonPressed = true;
-            this.checkmark = PIXI.Sprite.fromImage("../assets/Spritesheets/checkmark.png");
             this.stage.addChild(this.checkmark);
+            this.bIsFinished = true;
             console.log("It worked!");
         }
     },
 
-    Finish: function() {
+    Finish: function () {
         console.log("Game over");
         return this.buttonPressed;
     }

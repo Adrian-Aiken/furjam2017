@@ -100,7 +100,7 @@ PlayerGamepad.prototype = {
         if (this.isKeyboard) {
             return keyMap[this.config[buttonNum]]; 
         } else {
-            return this.gamepadManager.getButtonPressed(this.gamepadNum, this.config.buttons[buttonNum]);
+            return this.gamepadManager.getButtonPressed(this.gamepadNum, buttonNum);
         }
     },
 
@@ -109,7 +109,7 @@ PlayerGamepad.prototype = {
             return 0;
         }
         else{
-            return this.gamepadManager.getAxisValue(this.gamepadNum, this.config.axes[axisNum]);
+            return this.gamepadManager.getAxisValue(this.gamepadNum, axisNum);
         }
     }
 } 

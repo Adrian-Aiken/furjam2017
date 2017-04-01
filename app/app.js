@@ -10,6 +10,7 @@ require.config({
         // Locally required classes
         engine: "GameEngine",
         minigame: "Minigame",
+        minigameManager: "MinigameManager",
         gamepad: "Gamepad",
         player: "Player",
         assetmanager: "AssetManager",

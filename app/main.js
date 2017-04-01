@@ -5,7 +5,7 @@ var GAME_LIST = ["ExampleGame"];
 var gEngine, assMan;
 var minigames = [];
 
-define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'assetmanager'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'minigameManager', 'assetmanager'].concat(GAME_LIST), function ($, _) {
     assMan = new AssetManager();
     
     _.each(GAME_LIST, (gameName) => {
@@ -18,13 +18,14 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
 
         console.log("Pushed: " + game.name);
     });
+    */
 
     assMan.LoadAssets();
 
     gEngine = new Engine();
     gEngine.start();
-    var testGamepad = new PlayerGamepad(true, Player1_keys, 0, gEngine.gamepadManager);
-    minigames[0].init(testGamepad, gEngine.stage);
+
+    /*minigames[0].init();
 
     var loopCount = 0;
     var minigameLoop = setInterval(function() {
@@ -36,6 +37,6 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
             minigames[0].finish();
         }
     }, 1000/60);
-    
+    */
 
 });
