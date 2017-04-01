@@ -89,18 +89,18 @@ var PlayerGamepad = function(_isKeyboard, _defaultConfig, _gamepadNumber, _gamep
 }
 
 PlayerGamepad.prototype = {
-    left:   function () { return this.isKeyboard ? this.getButton(this.config.buttons.DpadLeft) || this.getAxis(this.config.axes.LeftStickHorizontal) < (this.config.deadZoneValue * -1) : this.getButton(0); },
-    up:     function () { return this.isKeyboard ? this.getButton(this.config.buttons.DpadUp) || this.getAxis(this.config.axes.LeftStickVertical) > this.config.deadZoneValue : this.getButton(1);  },
-    right:  function () { return this.isKeyboard ? this.getButton(this.config.buttons.DpadRight) || this.getAxis(this.config.axes.LeftStickHorizontal) > this.config.deadZoneValue : this.getButton(2);  },
-    down:   function () { return this.isKeyboard ? this.getButton(this.config.buttons.DpadDown) || this.getAxis(this.config.axes.LeftStickVertical) < (this.config.deadZoneValue * -1) : this.getButton(3);  },
-    a_btn:  function () { return this.isKeyboard ? this.getButton(this.config.buttons.A) : this.getButton(4);  },
-    b_btn:  function () { return this.isKeyboard ? this.getButton(this.config.buttons.B) : this.getButton(5);  },
+    left:   function () { return !this.isKeyboard ? this.getButton(this.config.buttons.DpadLeft) || this.getAxis(this.config.axes.LeftStickHorizontal) < (this.config.deadZoneValue * -1) : this.getButton(0); },
+    up:     function () { return !this.isKeyboard ? this.getButton(this.config.buttons.DpadUp) || this.getAxis(this.config.axes.LeftStickVertical) > this.config.deadZoneValue : this.getButton(1);  },
+    right:  function () { return !this.isKeyboard ? this.getButton(this.config.buttons.DpadRight) || this.getAxis(this.config.axes.LeftStickHorizontal) > this.config.deadZoneValue : this.getButton(2);  },
+    down:   function () { return !this.isKeyboard ? this.getButton(this.config.buttons.DpadDown) || this.getAxis(this.config.axes.LeftStickVertical) < (this.config.deadZoneValue * -1) : this.getButton(3);  },
+    a_btn:  function () { return !this.isKeyboard ? this.getButton(this.config.buttons.A) : this.getButton(4);  },
+    b_btn:  function () { return !this.isKeyboard ? this.getButton(this.config.buttons.B) : this.getButton(5);  },
 
     getButton: function (buttonNum) {
         if (this.isKeyboard) {
             return keyMap[this.config[buttonNum]]; 
         } else {
-            return this.gamepadManager.getButtonPressed(this.gamepadNum, this.config.buttons[buttonNum]);
+            return this.gamepadManager.getButtonPressed(this.gamepadNum, buttonNum);
         }
     },
 
@@ -109,7 +109,7 @@ PlayerGamepad.prototype = {
             return 0;
         }
         else{
-            return this.gamepadManager.getAxisValue(this.gamepadNum, this.config.axes[axisNum]);
+            return this.gamepadManager.getAxisValue(this.gamepadNum, axisNum);
         }
     }
 } 
