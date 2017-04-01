@@ -25,6 +25,9 @@ var Engine = function () {
     this.stage = new PIXI.Container();
 
     this.gamepadManager = new GamepadManager();
+
+    var GAME_LIST = ["ExampleGame"];    //TEMP
+    this.minigameManager = new MinigameManager(GAME_LIST);
 };
 
 Engine.prototype = {
@@ -34,7 +37,7 @@ Engine.prototype = {
     },
 
     update: function () {
-        var deltaTime = (Date.now() - this.lastUpdateTime);
+        var deltaTime = (Date.now() - this.lastUpdateTime) / 1000.0;
         //console.log("Update Frame.  dT = " + deltaTime);
 
         requestAnimationFrame(this.update.bind(this));
@@ -48,6 +51,11 @@ Engine.prototype = {
 
         //todo: web worker for render thread
         this.render();
+
+        if(this.minigameManager.bIsRunning){
+            //Checks whether or not the current minigame is finished, then progresses to the next game or ends the game
+            this.minigameManager.checkCurrentGameState(deltaTime);
+        }
 
         this.lastUpdateTime = Date.now();
     },

@@ -5,7 +5,8 @@ var GAME_LIST = ["ExampleGame"];
 var gEngine;
 var minigames = [];
 
-define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'minigameManager'].concat(GAME_LIST), function ($, _) {
+    /*
     _.each(GAME_LIST, (gameName) => {
         var game = eval(gameName);
         
@@ -13,10 +14,12 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
 
         console.log("Pushed: " + minigames[0].name);
     });
+    */
 
     gEngine = new Engine();
     gEngine.start();
-    minigames[0].init();
+
+    /*minigames[0].init();
 
     var loopCount = 0;
     var minigameLoop = setInterval(function() {
@@ -28,6 +31,6 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
             minigames[0].finish();
         }
     }, 1000/60);
-    
+    */
 
 });
