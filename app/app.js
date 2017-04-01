@@ -11,6 +11,7 @@ require.config({
         engine: "GameEngine",
         minigame: "Minigame",
         gamepad: "Gamepad",
+        player: "Player",
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example"
