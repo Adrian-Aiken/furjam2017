@@ -26,7 +26,6 @@ var Engine = function () {
 
     this.gamepadManager = new GamepadManager();
 
-    var GAME_LIST = ["ExampleGame"];    //TEMP
     this.minigameManager = new MinigameManager(GAME_LIST);
 };
 
@@ -46,7 +45,7 @@ Engine.prototype = {
         this.gamepadManager.pollConnectedGamepads();
 
         if (this.gameState != null) {
-            this.gameState();
+            this.gameState(deltaTime);
         }
 
         //todo: web worker for render thread
