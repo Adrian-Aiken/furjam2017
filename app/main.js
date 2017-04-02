@@ -1,6 +1,7 @@
 "use strict";
 
-var GAME_LIST = ["ExampleGame"];
+//var GAME_LIST = ["ExampleGame", "DiaperGuy"];
+var GAME_LIST = ["DiaperGuy"];
 
 var gEngine, assMan;
 
@@ -9,5 +10,4 @@ define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 
 
     gEngine = new Engine();
     gEngine.start();
-
 });

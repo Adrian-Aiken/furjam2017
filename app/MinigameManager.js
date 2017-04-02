@@ -108,7 +108,7 @@ MinigameManager.prototype = {
         this.currentMinigameIndex++;
         this.currentMinigame = this.minigameList[this.currentMinigameIndex];
         this.selectNextPlayers(this.currentMinigame.numPlayers);
-        this.currentMinigame.init(this.currentPlayers, gEngine.stage);
+        this.currentMinigame.init(this.currentPlayers, gEngine.stage, this._maxMinigameTime);
         console.log("Initialized minigame " + this.currentMinigameIndex);
         gEngine.gameState = this.currentMinigame.update.bind(this.currentMinigame);
         gEngine.gameHUD.setPrompt(this.currentMinigame.prompt);

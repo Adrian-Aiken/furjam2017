@@ -17,7 +17,8 @@ require.config({
         hud: "GameHUD",
 
         //***** GAME LIST - Put game here *****
-        ExampleGame: "Minigames/example"
+        ExampleGame: "Minigames/example",
+        DiaperGuy: "Minigames/diaperguy"
     }
 });
 
