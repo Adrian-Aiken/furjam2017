@@ -36,7 +36,7 @@ var DiaperGuy = {
         this.playerActed = false;
         this.playerWon = false;
         this.countdown = (Math.random() * -5) - 2;
-        this.winTime = 1.5;
+        this.winTime = 1;
     },
 
     Update: function(deltaTime) {
