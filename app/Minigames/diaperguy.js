@@ -11,7 +11,9 @@ var DiaperGuy = {
     Assets: {
         Sprites: [
             { Name: "diaperguy", FileName: "diaperguy.jpg" },
-            { Name: "dg_background", FileName: "diaperguy_background.jpg" }
+            { Name: "dg_background", FileName: "diaperguy_background.jpg" },
+            { Name: "checkmark", FileName: "checkmark.png"},
+            { Name: "incorrect", FileName: "incorrect.png" }
         ],
         Sounds: []
     },
@@ -31,6 +33,16 @@ var DiaperGuy = {
         this.dgSprite.y = (window.innerHeight - this.dgSprite.height) / 2;
         this.dgSprite.x = window.innerWidth;
         stage.addChild(this.dgSprite);
+        
+        this.checkmark = assMan.GetSprite("checkmark");
+        this.checkmark.x = -1000000;
+        this.checkmark.y = -1000000;
+        this.stage.addChild(this.checkmark);
+
+        this.incorrect = assMan.GetSprite("incorrect");
+        this.incorrect.x = -1000000;
+        this.incorrect.y = -1000000;
+        this.stage.addChild(this.incorrect);
 
         // Set up initial game state
         this.playerActed = false;
@@ -43,8 +55,8 @@ var DiaperGuy = {
         // Update guy showing up
         this.countdown += deltaTime;
         this.dgSprite.y = (window.innerHeight - this.dgSprite.height) / 2;
-        console.log("Countdown: " + this.countdown);
-        if (this.countdown >= 0) {
+
+        if (this.countdown >= 0 && !this.playerWon) {
             this.dgSprite.x = window.innerWidth - ((window.innerWidth/this.winTime) * this.countdown);
         }
 
@@ -57,8 +69,13 @@ var DiaperGuy = {
             if (this.players[0].myGamepad.a_btn()) {
                 this.playerActed = true;
 
-                if (countdown >= 0 && countdown <= this.winTime) {
+                if (this.countdown >= 0 && this.countdown <= this.winTime) {
                     this.playerWon = true;
+                    this.checkmark.x = (window.innerWidth - this.checkmark.width) / 2;
+                    this.checkmark.y = (window.innerHeight - this.checkmark.height) / 2;
+                } else {
+                    this.incorrect.x = (window.innerWidth - this.incorrect.width) / 2;
+                    this.incorrect.y = (window.innerHeight - this.incorrect.height) / 2;
                 }
             }
         }
