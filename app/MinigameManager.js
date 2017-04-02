@@ -40,6 +40,10 @@ MinigameManager.prototype = {
     addPlayer: function (name, color, avatar) {
         var player = new Player(name, color, avatar);
         this.players.push(player);
+
+        if(gEngine && gEngine.gameHUD){
+            gEngine.gameHUD.addPlayerElement(player);
+        }
     },
 
     selectNextPlayers: function (numPlayers) {
@@ -63,6 +67,9 @@ MinigameManager.prototype = {
         this.totalTime = 0;
         this.currentMinigameIndex = -1;
         this.bIsRunning = true;
+        if(gEngine && gEngine.gameHUD){
+            gEngine.gameHUD.showHUD();
+        }
         this.nextMinigame();
     },
 
@@ -88,10 +95,10 @@ MinigameManager.prototype = {
         this.currentMinigameTime += timeElapsed;
         this.totalTime += timeElapsed;
 
-        if (this.totalTime >= this.maxTotalGameTime) {
+        if (this.totalTime >= this.maxTotalGameTime || this.currentMinigameIndex >= this.minigameList.length - 1) {
             this.finishGame();
         }
-        else if (this.currentMinigame.bIsFinished || this.currentMingameTime >= this.maxMinigameTime) {
+        else if (this.currentMinigame.bIsFinished || this.currentMinigameTime >= this.maxMinigameTime) {
             this.nextMinigame();
         }
     },
@@ -104,5 +111,6 @@ MinigameManager.prototype = {
         this.currentMinigame.init(this.currentPlayers, gEngine.stage);
         console.log("Initialized minigame " + this.currentMinigameIndex);
         gEngine.gameState = this.currentMinigame.update.bind(this.currentMinigame);
+        gEngine.gameHUD.setPrompt(this.currentMinigame.prompt);
     }
 }

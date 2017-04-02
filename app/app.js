@@ -14,6 +14,7 @@ require.config({
         gamepad: "Gamepad",
         player: "Player",
         assetmanager: "AssetManager",
+        hud: "GameHUD",
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example"

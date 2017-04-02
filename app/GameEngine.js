@@ -28,16 +28,20 @@ var Engine = function () {
 
     var GAME_LIST = ["ExampleGame"];    //TEMP
     this.minigameManager = new MinigameManager(GAME_LIST);
+
+    this.gameHUD = new GameHUD();
+    
 };
 
 Engine.prototype = {
 
     start: function () {
+        this.gameHUD.createHUDObjects();
         this.update();
     },
 
     update: function () {
-        var deltaTime = (Date.now() - this.lastUpdateTime) / 1000.0;
+        var deltaTime = this.deltaTime = (Date.now() - this.lastUpdateTime) / 1000.0;
         //console.log("Update Frame.  dT = " + deltaTime);
 
         requestAnimationFrame(this.update.bind(this));
@@ -52,9 +56,13 @@ Engine.prototype = {
         //todo: web worker for render thread
         this.render();
 
-        if(this.minigameManager.bIsRunning){
+        if (this.minigameManager.bIsRunning) {
             //Checks whether or not the current minigame is finished, then progresses to the next game or ends the game
             this.minigameManager.checkCurrentGameState(deltaTime);
+
+            if (this.gameHUD) {
+                this.gameHUD.update();
+            }
         }
 
         this.lastUpdateTime = Date.now();
