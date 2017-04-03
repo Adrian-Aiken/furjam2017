@@ -23,7 +23,7 @@ Player.prototype = {
             this.myGamepad.gamepadNum = newIndex;
         }
         else {
-            this.myGamepad = new PlayerGamepad(false, new GamepadMapping(), newIndex, gEngine.gamepadManager);
+            this.myGamepad = new PlayerGamepad(true, Player1_keys, newIndex, gEngine.gamepadManager);
         }
     }
 }
