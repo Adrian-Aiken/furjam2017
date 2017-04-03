@@ -12,6 +12,7 @@ var MinigameManager = function (_allMinigames) {
     this.currentMinigameTime = 0;
     this.totalTime = 0;
     this.bIsRunning = false;
+    this.minigameContainer = new PIXI.Container();
 }
 
 MinigameManager.prototype = {
@@ -67,16 +68,20 @@ MinigameManager.prototype = {
         this.totalTime = 0;
         this.currentMinigameIndex = -1;
         this.bIsRunning = true;
+        //Need to add the minigameContainer so that the HUD will always show on top
+        gEngine.stage.addChild(this.minigameContainer);
         if(gEngine && gEngine.gameHUD){
             gEngine.gameHUD.showHUD();
         }
         this.nextMinigame();
+        
     },
 
     finishGame: function () {
         //bring up summary screen  
         this.bIsRunning = false;
         console.log("Finished all minigames! ");
+        gEngine.stage.removeChild(this.minigameContainer);
     },
 
     //Initializes the list of minigames available
@@ -104,11 +109,14 @@ MinigameManager.prototype = {
     },
 
     nextMinigame: function () {
+        if(this.currentMinigame){
+            this.currentMinigame.finish();
+        }
         this.currentMinigameTime = 0;
         this.currentMinigameIndex++;
         this.currentMinigame = this.minigameList[this.currentMinigameIndex];
         this.selectNextPlayers(this.currentMinigame.numPlayers);
-        this.currentMinigame.init(this.currentPlayers, gEngine.stage, this._maxMinigameTime);
+        this.currentMinigame.init(this.currentPlayers, this.minigameContainer, this._maxMinigameTime);
         console.log("Initialized minigame " + this.currentMinigameIndex);
         gEngine.gameState = this.currentMinigame.update.bind(this.currentMinigame);
         gEngine.gameHUD.setPrompt(this.currentMinigame.prompt);

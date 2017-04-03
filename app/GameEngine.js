@@ -29,13 +29,15 @@ var Engine = function () {
     this.minigameManager = new MinigameManager(GAME_LIST);
 
     this.gameHUD = new GameHUD();
-    
+
 };
 
 Engine.prototype = {
 
     start: function () {
         this.gameHUD.createHUDObjects();
+        this.currentUIScreen = new StartScreen();
+        this.gameState = this.currentUIScreen.update.bind(this.currentUIScreen);
         this.update();
     },
 

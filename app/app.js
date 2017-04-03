@@ -15,6 +15,8 @@ require.config({
         player: "Player",
         assetmanager: "AssetManager",
         hud: "GameHUD",
+        startScreen: "StartScreen",
+        summaryScreen: "SummaryScreen",
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example",

@@ -12,7 +12,7 @@ var DiaperGuy = {
         Sprites: [
             { Name: "diaperguy", FileName: "diaperguy.jpg" },
             { Name: "dg_background", FileName: "diaperguy_background.jpg" },
-            { Name: "checkmark", FileName: "checkmark.png"},
+            { Name: "checkmark", FileName: "checkmark.png" },
             { Name: "incorrect", FileName: "incorrect.png" }
         ],
         Sounds: []
@@ -33,7 +33,7 @@ var DiaperGuy = {
         this.dgSprite.y = (window.innerHeight - this.dgSprite.height) / 2;
         this.dgSprite.x = window.innerWidth;
         stage.addChild(this.dgSprite);
-        
+
         this.checkmark = assMan.GetSprite("checkmark");
         this.checkmark.x = -1000000;
         this.checkmark.y = -1000000;
@@ -51,13 +51,13 @@ var DiaperGuy = {
         this.winTime = 1;
     },
 
-    Update: function(deltaTime) {
+    Update: function (deltaTime) {
         // Update guy showing up
         this.countdown += deltaTime;
         this.dgSprite.y = (window.innerHeight - this.dgSprite.height) / 2;
 
         if (this.countdown >= 0 && !this.playerWon) {
-            this.dgSprite.x = window.innerWidth - ((window.innerWidth/this.winTime) * this.countdown);
+            this.dgSprite.x = window.innerWidth - ((window.innerWidth / this.winTime) * this.countdown);
         }
 
         if (this.countdown >= this.winTime * 2) {
@@ -71,6 +71,7 @@ var DiaperGuy = {
 
                 if (this.countdown >= 0 && this.countdown <= this.winTime) {
                     this.playerWon = true;
+
                     this.checkmark.x = (window.innerWidth - this.checkmark.width) / 2;
                     this.checkmark.y = (window.innerHeight - this.checkmark.height) / 2;
                 } else {
@@ -81,7 +82,11 @@ var DiaperGuy = {
         }
     },
 
-    Finish: function() {
+    Finish: function () {
+        if (this.playerWon) {
+            this.players[0].points += 50;
+        }
+        console.log("Game finished! " + this.playerWon);
         return this.playerWon;
     }
 }

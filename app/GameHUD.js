@@ -148,7 +148,10 @@ GameHUD.prototype = {
     },
 
     setPrompt: function(newPrompt){
+        this.txt_prompt.visible = true;
         this.txt_prompt.text = newPrompt;
+
+        setTimeout(function(){ this.txt_prompt.visible = false; }.bind(this), 1500);
     },
 
     update: function() {

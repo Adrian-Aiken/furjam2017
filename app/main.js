@@ -5,7 +5,7 @@ var GAME_LIST = ["DiaperGuy"];
 
 var gEngine, assMan;
 
-define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'minigameManager', 'assetmanager', 'hud'].concat(GAME_LIST), function ($, _) {
+define(['jquery', 'underscore', 'pixi', 'audio', 'gamepad', 'player', 'engine', 'minigame', 'minigameManager', 'assetmanager', 'hud', 'startScreen', 'summaryScreen'].concat(GAME_LIST), function ($, _) {
     assMan = new AssetManager();
 
     gEngine = new Engine();
