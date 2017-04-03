@@ -74,7 +74,12 @@
         for(var i = 0; i < gamepads.length; i++){
             if(gEngine.gamepadManager.getButtonPressed(i, gEngine.gamepadManager.defaultGamepadMapping.buttons.A)){
                 this.startGame();
+                return;
             }
+        }
+        // CURRENT DEBUG FOR KEYBOARD USERS
+        if (keyMap[32]) {
+            this.startGame();
         }
      },
 
