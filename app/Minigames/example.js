@@ -30,7 +30,7 @@ var ExampleGame = {
         this.checkmark.width = window.innerWidth;
     },
 
-    Update: function(deltaTime) {
+    Update: function (deltaTime) {
         if (this.pad.a_btn()) {
             this.buttonPressed = true;            
             this.stage.addChild(this.checkmark);

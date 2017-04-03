@@ -18,7 +18,8 @@ require.config({
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example",
-        DiaperGuy: "Minigames/diaperguy"
+        DiaperGuy: "Minigames/diaperguy",
+        MashA: "Minigames/masha"
     }
 });
 
