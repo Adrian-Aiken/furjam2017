@@ -41,6 +41,11 @@ Engine.prototype = {
         this.update();
     },
 
+    restart: function(){
+        this.currentUIScreen = new StartScreen();
+        this.gameState = this.currentUIScreen.update.bind(this.currentUIScreen); 
+    },
+
     update: function () {
         var deltaTime = this.deltaTime = (Date.now() - this.lastUpdateTime) / 1000.0;
         //console.log("Update Frame.  dT = " + deltaTime);

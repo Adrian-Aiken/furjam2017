@@ -82,6 +82,20 @@ MinigameManager.prototype = {
         this.bIsRunning = false;
         console.log("Finished all minigames! ");
         gEngine.stage.removeChild(this.minigameContainer);
+
+        gEngine.currentUIScreen = new SummaryScreen();
+        gEngine.gameState = gEngine.currentUIScreen.update.bind(gEngine.currentUIScreen);
+    },
+
+    getWinner:function() {
+        var curWinner = this.players[0]
+        for(var i = 1; i < this.players.length; i++){
+            if(this.players[i].points > curWinner.points){
+                curWinner = this.players[i];
+            }
+        }
+
+        return curWinner;
     },
 
     //Initializes the list of minigames available
@@ -112,6 +126,7 @@ MinigameManager.prototype = {
         if(this.currentMinigame){
             this.currentMinigame.finish();
         }
+        this.clearMinigame();
         this.currentMinigameTime = 0;
         this.currentMinigameIndex++;
         this.currentMinigame = this.minigameList[this.currentMinigameIndex];
@@ -120,5 +135,11 @@ MinigameManager.prototype = {
         console.log("Initialized minigame " + this.currentMinigameIndex);
         gEngine.gameState = this.currentMinigame.update.bind(this.currentMinigame);
         gEngine.gameHUD.setPrompt(this.currentMinigame.prompt);
+    },
+
+    clearMinigame: function() {
+        while(this.minigameContainer.children.length > 0){
+            this.minigameContainer.removeChildAt(0);
+        }
     }
 }
