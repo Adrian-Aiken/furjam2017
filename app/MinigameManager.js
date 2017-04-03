@@ -7,6 +7,7 @@ var MinigameManager = function (_allMinigames) {
     this.minigameList = [];
     this.players = [];
     this.currentPlayers = [];
+    this.nextPlayerIndex = 0;
     this.allMinigames = _allMinigames;
     this.currentMinigameIndex = -1;
     this.currentMinigameTime = 0;
@@ -18,7 +19,7 @@ var MinigameManager = function (_allMinigames) {
 MinigameManager.prototype = {
 
     testGameType: function () {
-        this.setOptions(30, 4500, 15, 2, false);
+        this.setOptions(30, 4500, 15, 3, false);
         this.initDebugPlayers();
         this.startGame();
     },
@@ -49,15 +50,10 @@ MinigameManager.prototype = {
 
     selectNextPlayers: function (numPlayers) {
         var nextPlayers = [];
-        for (var i = 0; i < this.players.length; i++) {
-            var curPlayer = this.players[i];
-            if (this.currentPlayers.indexOf(curPlayer) < 0) {
-                curPlayer.setGamepadIndex(nextPlayers.length);
-                nextPlayers.push(curPlayer);
-            }
-            if (nextPlayers.length >= numPlayers) {
-                break;
-            }
+        for (var i = 0; i < numPlayers; i++) {
+            nextPlayers.push(this.players[this.nextPlayerIndex++]);
+            this.nextPlayerIndex %= this.players.length;
+            nextPlayers[i].setGamepadIndex(i);
         }
         this.currentPlayers = nextPlayers;
     },
