@@ -84,6 +84,9 @@ var MashA = {
     },
 
     Finish: function() {
+        if (this.winner > -1) {
+            this.players[this.winner].points += 50;
+        }
         return this.winner >= 0;
     }
 }
