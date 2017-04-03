@@ -41,9 +41,12 @@ Engine.prototype = {
         this.update();
     },
 
-    restart: function(){
+    restart: function () {
+        this.minigameManager.reset();
+        this.gameHUD.reset();
+
         this.currentUIScreen = new StartScreen();
-        this.gameState = this.currentUIScreen.update.bind(this.currentUIScreen); 
+        this.gameState = this.currentUIScreen.update.bind(this.currentUIScreen);
     },
 
     update: function () {

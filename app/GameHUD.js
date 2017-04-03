@@ -147,6 +147,13 @@ GameHUD.prototype = {
         
     },
 
+    reset: function(){
+        while(this.playersElements.length > 0){
+            this.playersContainer.removeChild(this.playersElements[0]);
+            this.playersElements.splice(0, 1);
+        }
+    },
+
     setPrompt: function(newPrompt){
         this.txt_prompt.visible = true;
         this.txt_prompt.text = newPrompt;
@@ -155,7 +162,7 @@ GameHUD.prototype = {
     },
 
     update: function() {
-        this.txt_totalGameTime.text = "Time Remaining: " + Math.floor(gEngine.minigameManager.maxTotalGameTime - gEngine.minigameManager.totalTime);
+        this.txt_totalGameTime.text = "Game " + (gEngine.minigameManager.currentMinigameIndex + 1) + " out of " + gEngine.minigameManager.minigameList.length;
         this.txt_currentGameTime.text = "Game Time: " + Math.floor(gEngine.minigameManager.maxMinigameTime - gEngine.minigameManager.currentMinigameTime);
 
         for(var i = 0; i < this.playersElements.length; i++){

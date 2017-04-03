@@ -1,7 +1,7 @@
 "use strict";
 
 //var GAME_LIST = ["ExampleGame", "DiaperGuy"];
-var GAME_LIST = ["MashA"];
+var GAME_LIST = ["MashA", "DiaperGuy"];
 
 var gEngine, assMan;
 

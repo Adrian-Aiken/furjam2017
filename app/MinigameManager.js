@@ -19,9 +19,19 @@ var MinigameManager = function (_allMinigames) {
 MinigameManager.prototype = {
 
     testGameType: function () {
-        this.setOptions(30, 4500, 15, 3, false);
+        this.setOptions(30, 4500, 5, 3, false);
         this.initDebugPlayers();
         this.startGame();
+    },
+
+    reset: function() {
+        this.minigameList = [];
+        this.players = [];
+        this.currentPlayers = [];
+        this.nextPlayerIndex = 0;
+        this.currentMinigameIndex = -1;
+        this.currentMinigameTime = 0;
+        this.totalTime = 0;
     },
 
     setOptions: function (_maxMinigameTime, _maxTotalGameTime, _numTotalRounds, _numPlayers, _statusEffectsEnabled) {
@@ -35,7 +45,7 @@ MinigameManager.prototype = {
     //This will be removed once we have a player join screen
     initDebugPlayers: function () {
         for (var i = 0; i < this.numPlayers; i++) {
-            this.addPlayer("Player " + i, "#FFFFFF", {});
+            this.addPlayer("Player " + (i + 1), "#FF00FF", {});
         }
     },
 
@@ -59,6 +69,10 @@ MinigameManager.prototype = {
     },
 
     startGame: function () {
+        for(var i = 0; i < this.players.length; i++){
+            this.players[i].points = 0;
+        }
+
         this.initializeMinigames();
         this.currentMinigameTime = 0;
         this.totalTime = 0;
@@ -96,6 +110,8 @@ MinigameManager.prototype = {
 
     //Initializes the list of minigames available
     initializeMinigames: function () {
+        this.minigameList = [];
+
         for (var i = 0; i < this.totalRounds; i++) {
             var randGame = Math.floor(Math.random() * this.allMinigames.length);
             var gameInstance = eval(this.allMinigames[randGame]);
