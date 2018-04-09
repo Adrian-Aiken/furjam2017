@@ -4,7 +4,7 @@
 
 var MashA = {
     Name: "Mash A",
-    Author: "Goatie",
+    Author: "Adrian Aiken",
     Prompt: "Press A a bunch!",
     NumPlayers: 2,
 

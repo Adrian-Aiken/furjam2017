@@ -5,7 +5,7 @@
 var ExampleGame = {
     /** Required feilds for the Minigame object */
     Name: "Example Game",
-    Author: "Goatie",
+    Author: "Adrian Aiken",
     Prompt: "Press a button!",
     NumPlayers: 1,
 

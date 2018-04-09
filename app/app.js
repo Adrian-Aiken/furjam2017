@@ -20,7 +20,7 @@ require.config({
 
         //***** GAME LIST - Put game here *****
         ExampleGame: "Minigames/example",
-        DiaperGuy: "Minigames/diaperguy",
+        MovingGuy: "Minigames/movingguy",
         MashA: "Minigames/masha"
     }
 });
