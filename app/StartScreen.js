@@ -84,6 +84,7 @@
      },
 
      startGame: function(){
+         gEngine.stage.removeChild(this.screenContainer);
          gEngine.minigameManager.testGameType();
      },
  }

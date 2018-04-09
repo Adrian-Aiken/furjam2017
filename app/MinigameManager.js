@@ -19,9 +19,19 @@ var MinigameManager = function (_allMinigames) {
 MinigameManager.prototype = {
 
     testGameType: function () {
-        this.setOptions(30, 4500, 15, 3, false);
+        this.setOptions(30, 4500, 5, 3, false);
         this.initDebugPlayers();
         this.startGame();
+    },
+
+    reset: function() {
+        this.minigameList = [];
+        this.players = [];
+        this.currentPlayers = [];
+        this.nextPlayerIndex = 0;
+        this.currentMinigameIndex = -1;
+        this.currentMinigameTime = 0;
+        this.totalTime = 0;
     },
 
     setOptions: function (_maxMinigameTime, _maxTotalGameTime, _numTotalRounds, _numPlayers, _statusEffectsEnabled) {
@@ -35,7 +45,7 @@ MinigameManager.prototype = {
     //This will be removed once we have a player join screen
     initDebugPlayers: function () {
         for (var i = 0; i < this.numPlayers; i++) {
-            this.addPlayer("Player " + i, "#FFFFFF", {});
+            this.addPlayer("Player " + (i + 1), "#FF00FF", {});
         }
     },
 
@@ -59,6 +69,10 @@ MinigameManager.prototype = {
     },
 
     startGame: function () {
+        for(var i = 0; i < this.players.length; i++){
+            this.players[i].points = 0;
+        }
+
         this.initializeMinigames();
         this.currentMinigameTime = 0;
         this.totalTime = 0;
@@ -78,10 +92,26 @@ MinigameManager.prototype = {
         this.bIsRunning = false;
         console.log("Finished all minigames! ");
         gEngine.stage.removeChild(this.minigameContainer);
+
+        gEngine.currentUIScreen = new SummaryScreen();
+        gEngine.gameState = gEngine.currentUIScreen.update.bind(gEngine.currentUIScreen);
+    },
+
+    getWinner:function() {
+        var curWinner = this.players[0]
+        for(var i = 1; i < this.players.length; i++){
+            if(this.players[i].points > curWinner.points){
+                curWinner = this.players[i];
+            }
+        }
+
+        return curWinner;
     },
 
     //Initializes the list of minigames available
     initializeMinigames: function () {
+        this.minigameList = [];
+
         for (var i = 0; i < this.totalRounds; i++) {
             var randGame = Math.floor(Math.random() * this.allMinigames.length);
             var gameInstance = eval(this.allMinigames[randGame]);
@@ -108,6 +138,7 @@ MinigameManager.prototype = {
         if(this.currentMinigame){
             this.currentMinigame.finish();
         }
+        this.clearMinigame();
         this.currentMinigameTime = 0;
         this.currentMinigameIndex++;
         this.currentMinigame = this.minigameList[this.currentMinigameIndex];
@@ -116,5 +147,11 @@ MinigameManager.prototype = {
         console.log("Initialized minigame " + this.currentMinigameIndex);
         gEngine.gameState = this.currentMinigame.update.bind(this.currentMinigame);
         gEngine.gameHUD.setPrompt(this.currentMinigame.prompt);
+    },
+
+    clearMinigame: function() {
+        while(this.minigameContainer.children.length > 0){
+            this.minigameContainer.removeChildAt(0);
+        }
     }
 }
